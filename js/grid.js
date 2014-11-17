@@ -26,15 +26,15 @@ Grid.prototype.randomAvailableCell = function () {
     var bestScore = -1;
 
     for (var i = 0; i < cells.length; i++) {
-      var curScore = this.freeRowsCols(cells[i]) * 65536 + this.discontinuity(cells[i]);
+      var curScore = -this.freeRowsCols(cells[i]) * 65536 + this.discontinuity(cells[i]);
       if (curScore > bestScore || (curScore == bestScore && Math.random() < 0.5)) {
         bestCell = cells[i];
         bestScore = curScore;
       }
     }
-    var bestValue = 2;
+    var bestValue = 4;
     if (bestScore % 65536 == 2) {
-      bestValue = 4;
+      bestValue = 2;
     }
     return {
       cell: bestCell,
@@ -102,7 +102,7 @@ Grid.prototype.discontinuity = function(cell) {
   for (var i = 0; i < 4; i++) {
     var nbr = this.cellContent({x: cell.x + dx[i], y: cell.y + dy[i]});
     if (nbr) {
-      maxNeighbor = Math.max(maxNeighbor, nbr.value);
+      maxNeighbor = Math.min(maxNeighbor, nbr.value);
     }
   }
   return maxNeighbor;
