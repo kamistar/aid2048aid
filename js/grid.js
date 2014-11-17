@@ -26,7 +26,7 @@ Grid.prototype.randomAvailableCell = function () {
     var bestScore = -1;
 
     for (var i = 0; i < cells.length; i++) {
-      var curScore = -this.freeRowsCols(cells[i]) * 65536 + this.discontinuity(cells[i]);
+      var curScore = -this.freeRowsCols(cells[i]) * 65536 + -this.discontinuity(cells[i]);
       if (curScore > bestScore || (curScore == bestScore && Math.random() < 0.5)) {
         bestCell = cells[i];
         bestScore = curScore;
